@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+    archlinux_ru_bot:
+        build: .
+        env_file:
+            - bot.env
+        links:
+            - postgres
+        restart: always
+    postgres:
+        build: ./docker/images/postgresql
+        volumes:
+            - ./docker/data/postgresql_data:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER=archlinux_ru_bot
+            - POSTGRES_PASSWORD=archlinux_ru_bot
+            - POSTGRES_DB=archlinux_ru_bot
+        restart: always

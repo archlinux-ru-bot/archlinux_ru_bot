@@ -1,0 +1,15 @@
+{
+  "name": "shizoid-js",
+  "version": "1.0.0",
+  "description": "Telegram intellectual bot",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Ilya Fedin",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "pg": "^6.4.2",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.35.1"
+  },
+  "devDependencies": {}
+}

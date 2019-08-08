@@ -1,0 +1,6 @@
+#!/bin/sh
+
+. /root/.nvm/nvm.sh
+
+cd /usr/src/app
+nvm exec node npm start

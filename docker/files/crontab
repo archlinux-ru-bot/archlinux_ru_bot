@@ -1,0 +1,1 @@
+@daily pacman -Syu --noconfirm && pacman -Scc --noconfirm

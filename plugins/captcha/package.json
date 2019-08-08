@@ -1,0 +1,12 @@
+{
+  "name": "captcha",
+  "version": "1.0.0",
+  "description": "Captcha plugin for archlinux_ru_bot",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Ilya Fedin",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "node-captcha-generator": "0.0.1"
+  }
+}
