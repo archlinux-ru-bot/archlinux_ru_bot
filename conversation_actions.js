@@ -25,7 +25,7 @@ async function sendWithMe(bot, msg) {
 async function sendVzhuh(bot, msg) {
 	await bot.sendMessage(msg.chat.id, doVzhuh(msg.text.replace(new RegExp(`^/vzhuh@${
 		bot.me.username
-	} `), '')), {
+	} ?`), '')), {
 		parse_mode: 'HTML',
 		reply_to_message_id: msg.message_id
 	});
