@@ -1,6 +1,6 @@
 {
   "name": "archlinux_ru_bot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Bot for archlinux_ru telegram group",
   "main": "index.js",
   "scripts": {

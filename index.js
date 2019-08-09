@@ -329,7 +329,7 @@ async function main() {
 		}
 	});
 
-	bot.on('text', async (ctx, next) => {
+	bot.on(['text', 'sticker'], async (ctx, next) => {
 		try {
 			await payRespectByKeyword(knex, bot.telegram, ctx, ctx.message, next);
 		} catch(e) {
@@ -337,7 +337,7 @@ async function main() {
 		}
 	});
 
-	bot.on('text', async (ctx, next) => {
+	bot.on(['text', 'sticker'], async (ctx, next) => {
 		try {
 			await voteBanByKeyword(knex, bot.telegram, ctx, ctx.message, next);
 		} catch(e) {
