@@ -79,7 +79,7 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
-docker/data/
-bot.env
-docker-compose.yml
-config.js
+/docker/data/
+/bot.env
+/docker-compose.yml
+/config.js
