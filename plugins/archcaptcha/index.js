@@ -49,6 +49,10 @@ async function onNewMessage(bot, msg) {
 
 	if(typeof msg.new_chat_members !== 'undefined') {
 		for(let newUser of msg.new_chat_members) {
+			if(newUser.is_bot) {
+				continue;
+			}
+
 			let allCurrentCaptcha = ActiveCaptcha.filter(item =>
 				item.chat_id === msg.chat.id && item.user_id === newUser.id);
 
