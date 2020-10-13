@@ -9,7 +9,7 @@
   "dependencies": {
     "pg": "^6.4.2",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^3.35.1"
+    "sequelize": "^5.15.1"
   },
   "devDependencies": {}
 }
