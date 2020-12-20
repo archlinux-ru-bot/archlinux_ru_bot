@@ -1,4 +1,5 @@
 let Telegraf = require('telegraf');
+let axios = require('axios');
 let Agent = require('https-proxy-agent');
 
 let {getArgs, getName, getMessageText} = require('./util');
@@ -23,6 +24,8 @@ let {showAbout, showHelp, showInlineHelp,
 	showAdminHelp, showHostInfo, showUpdateNotification} = require('./info_actions');
 
 let {payRespectByKeyword, voteBanByKeyword, orReaction} = require('./message_actions');
+
+const POLL_INTERVAL = Number(process.env.POLL_INTERVAL);
 
 async function exitHandler() {
 	try {
@@ -58,6 +61,31 @@ let bot = new Telegraf(process.env.BOT_TOKEN, {
 		agent: proxyAgent
 	}
 });
+
+async function startPolling(currentOffset = 0) {
+	let nextOffset = currentOffset;
+
+	try {
+		let response = await axios({
+			method: 'post',
+			url: 'https://api.telegram.org/bot' + bot.token + '/getUpdates',
+			data: {
+				offset: currentOffset
+			}
+		});
+
+		if(response.data.ok === true) {
+			for(let update of response.data.result) {
+				nextOffset = update.update_id + 1;
+				await bot.handleUpdate(update);
+			}
+		}
+	} catch(e) {
+		console.log(e);
+	}
+
+	setTimeout(startPolling, POLL_INTERVAL, nextOffset);
+}
 
 async function main() {
 	await createTables(knex);
@@ -453,11 +481,7 @@ async function main() {
 		}
 	});
 
-	bot.launch({
-		polling: {
-			timeout: 0.3
-		}
-	});
+	startPolling();
 }
 
 void async function getMe() {
