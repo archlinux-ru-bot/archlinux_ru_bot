@@ -2,6 +2,11 @@ let {getMessageText} = require('./util');
 
 let {payRespect, voteBan} = require('./profile_actions');
 
+const SUICIDE_STICKERS = [
+	'AgADYgIAAubOVgw', // https://t.me/addstickers/doyouknowdewey
+	'AgADJwADqialFg' // https://t.me/addstickers/alienyum
+];
+
 const ORU_ANSWERS = [
 	'Не ори, денег не будет',
 	'Прекрати, соседей разбудишь!',
@@ -90,7 +95,7 @@ async function voteBanByKeyword(knex, bot, ctx, msg, next) {
 		let unban_number = (unban_match || []).length;
 
 		await voteBan(knex, bot, msg, ban_number - unban_number);
-	} else if(typeof msg.sticker !== 'undefined' && msg.sticker.file_id === 'CAADAgADYgIAAubOVgxyTkh0XlyvlxYE') {
+	} else if(typeof msg.sticker !== 'undefined' && SUICIDE_STICKERS.includes(msg.sticker.file_unique_id)) {
 		msg.reply_to_message = msg;
 		await voteBan(knex, bot, msg, 1);
 	} else {
