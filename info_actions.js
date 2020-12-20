@@ -7,7 +7,13 @@ let {isChatExists, getChat, addChat,
 
 let {listPluginsFromRuntime, getPluginFromRuntime} = require('./runtime_plugin_tools');
 
-const CURRENT_VERSION = 1565295568136;
+const CURRENT_VERSION = 1608469360645;
+
+const UPDATE_TEXT =
+`<b>Новое в этой версии:</b>
+* Используется кастомный поллинг, чтобы избегать зависаний
+* Исправлено определение стикеров суицида
+* Добавлен еще один стикер суицида`;
 
 let UpdateNotificationLocks = {};
 
@@ -169,20 +175,9 @@ async function showUpdateNotification(knex, bot, msg) {
 	}
 
 	if(chat.version < CURRENT_VERSION) {
-		await bot.sendMessage(msg.chat.id,
-			`<b>Новое в этой версии:</b>
-* Возвращена команда /vzhuh, ибо никто не додумывается посмотреть в инлайн-режим
-* Добавлены плагины <b>Капча</b> и <b>Арчекапча</b>
-* Добавлены команды /about, /inlinehelp и /hostinfo
-* Плагин <b>Шизик</b> теперь откликается как по "шизик", так и по "арчебот"
-* И еще очень много внутренних изменений
-
-Сайт бота находится по адресу https://archbot.vielfrassx.tk
-Исходники опубликованы по адресу https://github.com/archlinux-ru-bot/archlinux_ru_bot
-
-Поздравляю всех с выходом долгожданной версии <b>1.0.0</b>! 🥂`, {
-				parse_mode: 'HTML'
-			});
+		await bot.sendMessage(msg.chat.id, UPDATE_TEXT, {
+			parse_mode: 'HTML'
+		});
 
 		answerMessage = await updateChat(knex, chat.chatid, CURRENT_VERSION);
 	}
