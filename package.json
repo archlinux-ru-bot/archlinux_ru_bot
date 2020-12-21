@@ -12,7 +12,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "archcaptcha": "file:plugins/archcaptcha",
-    "axios": "^0.19.0",
+    "axios": "^0.21.0",
     "captcha": "file:plugins/captcha",
     "https-proxy-agent": "^2.2.2",
     "knex": "^0.19.0",
