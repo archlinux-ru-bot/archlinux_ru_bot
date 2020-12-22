@@ -26,6 +26,10 @@ let {showAbout, showHelp, showInlineHelp,
 let {payRespectByKeyword, voteBanByKeyword, orReaction} = require('./message_actions');
 
 const POLL_INTERVAL = Number(process.env.POLL_INTERVAL);
+const POLL_INACTIVIY_LIMIT = Number(process.env.POLL_INACTIVIY_LIMIT);
+
+let lastPollTimestamp = 0;
+let currentPollingInstance;
 
 async function exitHandler() {
 	try {
@@ -62,7 +66,27 @@ let bot = new Telegraf(process.env.BOT_TOKEN, {
 	}
 });
 
-async function startPolling(currentOffset = 0) {
+async function watchForPolling() {
+	let timestampDifference = Date.now() - lastPollTimestamp;
+
+	if (lastPollTimestamp > 0 && timestampDifference >= POLL_INACTIVIY_LIMIT) {
+		console.log("polling doesn't work, starting again...:(");
+		startPolling();
+	}
+}
+
+async function startPolling(instanceId, currentOffset = 0) {
+	if(typeof instanceId !== 'undefined') {
+		if(currentPollingInstance != instanceId) {
+			console.log("stopped polling", instanceId);
+			return;
+		}
+	} else {
+		instanceId = Date.now();
+		currentPollingInstance = instanceId;
+		console.log("started polling", instanceId);
+	}
+
 	let nextOffset = currentOffset;
 
 	try {
@@ -84,7 +108,8 @@ async function startPolling(currentOffset = 0) {
 		console.log(e);
 	}
 
-	setTimeout(startPolling, POLL_INTERVAL, nextOffset);
+	lastPollTimestamp = Date.now();
+	setTimeout(startPolling, POLL_INTERVAL, instanceId, nextOffset);
 }
 
 async function main() {
@@ -482,6 +507,7 @@ async function main() {
 	});
 
 	startPolling();
+	setInterval(watchForPolling, POLL_INACTIVIY_LIMIT);
 }
 
 void async function getMe() {
