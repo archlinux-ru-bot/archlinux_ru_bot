@@ -234,7 +234,7 @@ async function linkUser(knex, bot, msg, action) {
 			});
 	}
 
-	if(oldusername === newusername) {
+	if(action === 'link' && oldusername === newusername) {
 		return await bot.sendMessage(msg.chat.id,
 			'<b>Ошибка:</b> старое и новое имя пользователя не могут быть одинаковыми', {
 				parse_mode: 'HTML',
