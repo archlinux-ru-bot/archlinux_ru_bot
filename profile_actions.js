@@ -242,7 +242,9 @@ async function linkUser(knex, bot, msg, action) {
 			});
 	}
 
-	if(`@${msg.from.username}` === oldusername &&
+	if(((msg.reply_to_message)
+		? (msg.from.id === msg.reply_to_message.from.id)
+		: (`@${msg.from.username}` === oldusername)) &&
 	!config.admin_ids.includes(msg.from.id)) {
 		return await bot.sendMessage(msg.chat.id,
 			'<b>Ошибка:</b> самому себе добавлять или удалять имя пользователя нельзя', {
