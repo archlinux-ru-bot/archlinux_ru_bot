@@ -70,21 +70,21 @@ async function watchForPolling() {
 	let timestampDifference = Date.now() - lastPollTimestamp;
 
 	if (lastPollTimestamp > 0 && timestampDifference >= POLL_INACTIVIY_LIMIT) {
-		console.log("polling doesn't work, starting again...:(");
+		console.log('polling doesn\'t work, starting again...:(');
 		startPolling();
 	}
 }
 
 async function startPolling(instanceId, currentOffset = 0) {
 	if(typeof instanceId !== 'undefined') {
-		if(currentPollingInstance != instanceId) {
-			console.log("stopped polling", instanceId);
+		if(currentPollingInstance !== instanceId) {
+			console.log('stopped polling', instanceId);
 			return;
 		}
 	} else {
 		instanceId = Date.now();
 		currentPollingInstance = instanceId;
-		console.log("started polling", instanceId);
+		console.log('started polling', instanceId);
 	}
 
 	let nextOffset = currentOffset;
@@ -279,7 +279,7 @@ async function main() {
 			} else {
 				num = 1;
 			}
-		
+
 			await vRotEban(knex, bot.telegram, ctx.message, num);
 		} catch(e) {
 			console.log(e);
