@@ -35,6 +35,7 @@ module.exports = {
 		],
 		'no-var': 'error',
 		'prefer-arrow-callback': 'error',
-		'no-console': 'off'
+		'no-trailing-spaces': 'error',
+		'eol-last': 'error'
 	}
 };
