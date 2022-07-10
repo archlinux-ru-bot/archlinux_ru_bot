@@ -25,16 +25,21 @@ let {payRespectByKeyword, voteBanByKeyword, orReaction} = require('./message_act
 
 async function exitHandler() {
 	try {
-		await uninitializePlugins();
+		bot.stop();
 	} catch(e) {
 		console.log(e);
 	}
 
-	return;
+	try {
+		await uninitializePlugins();
+	} catch(e) {
+		console.log(e);
+	}
 }
 
 process.on('exit', exitHandler);
-process.on('SIGINT', exitHandler);
+process.on('SIGINT', () => process.exit(1));
+process.on('SIGTERM', () => process.exit(1));
 
 let knex = require('knex')({
 	client: 'pg',
