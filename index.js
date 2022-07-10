@@ -1,6 +1,4 @@
 let Telegraf = require('telegraf');
-let axios = require('axios');
-let Agent = require('https-proxy-agent');
 
 let {getArgs, getName, getMessageText} = require('./util');
 
@@ -25,12 +23,6 @@ let {showAbout, showHelp, showInlineHelp,
 
 let {payRespectByKeyword, voteBanByKeyword, orReaction} = require('./message_actions');
 
-const POLL_INTERVAL = Number(process.env.POLL_INTERVAL);
-const POLL_INACTIVIY_LIMIT = Number(process.env.POLL_INACTIVIY_LIMIT);
-
-let lastPollTimestamp = 0;
-let currentPollingInstance;
-
 async function exitHandler() {
 	try {
 		await uninitializePlugins();
@@ -44,12 +36,6 @@ async function exitHandler() {
 process.on('exit', exitHandler);
 process.on('SIGINT', exitHandler);
 
-let proxyAgent = null;
-
-if(typeof process.env.HTTPS_PROXY !== 'undefined') {
-	proxyAgent = new Agent(process.env.HTTPS_PROXY);
-}
-
 let knex = require('knex')({
 	client: 'pg',
 	connection: {
@@ -62,55 +48,9 @@ let knex = require('knex')({
 
 let bot = new Telegraf(process.env.BOT_TOKEN, {
 	telegram: {
-		agent: proxyAgent
+		apiRoot: 'http://localhost:8081'
 	}
 });
-
-async function watchForPolling() {
-	let timestampDifference = Date.now() - lastPollTimestamp;
-
-	if (lastPollTimestamp > 0 && timestampDifference >= POLL_INACTIVIY_LIMIT) {
-		console.log('polling doesn\'t work, starting again...:(');
-		startPolling();
-	}
-}
-
-async function startPolling(instanceId, currentOffset = 0) {
-	if(typeof instanceId !== 'undefined') {
-		if(currentPollingInstance !== instanceId) {
-			console.log('stopped polling', instanceId);
-			return;
-		}
-	} else {
-		instanceId = Date.now();
-		currentPollingInstance = instanceId;
-		console.log('started polling', instanceId);
-	}
-
-	let nextOffset = currentOffset;
-
-	try {
-		let response = await axios({
-			method: 'post',
-			url: 'https://api.telegram.org/bot' + bot.token + '/getUpdates',
-			data: {
-				offset: currentOffset
-			}
-		});
-
-		if(response.data.ok === true) {
-			for(let update of response.data.result) {
-				nextOffset = update.update_id + 1;
-				await bot.handleUpdate(update);
-			}
-		}
-	} catch(e) {
-		console.log(e);
-	}
-
-	lastPollTimestamp = Date.now();
-	setTimeout(startPolling, POLL_INTERVAL, instanceId, nextOffset);
-}
 
 async function main() {
 	await createTables(knex);
@@ -506,8 +446,8 @@ async function main() {
 		}
 	});
 
-	startPolling();
-	setInterval(watchForPolling, POLL_INACTIVIY_LIMIT);
+	bot.telegram.setWebhook('http://localhost:5000');
+	bot.startWebhook('/', null, 5000);
 }
 
 void async function getMe() {

@@ -4,7 +4,8 @@ services:
     archlinux_ru_bot:
         build:
             context: .
-            dockerfile: Dockerfile.arm
+            args:
+                IMAGE: mydatakeeper/archlinuxarm:armv7h
         env_file:
             - bot.env
         links:
