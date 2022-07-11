@@ -30,7 +30,7 @@ async function isPluginAllowed(knex, pluginName, pluginGroup) {
 
 function listAllPlugins() {
 	return new Promise((resolve, reject) => {
-		fs.readdir(path.join(__dirname, 'plugin_binds'), (err, files) => {
+		fs.readdir(path.join(__dirname, 'plugins'), (err, files) => {
 			if(err) {
 				reject(err);
 			}
@@ -39,12 +39,7 @@ function listAllPlugins() {
 				files = [];
 			}
 
-			resolve(
-				files
-					.filter((file) =>
-						file.indexOf('.') !== 0 && file.slice(-3) === '.js')
-					.map((file) => file.slice(0, -3))
-			);
+			resolve(files.filter((file) => file.indexOf('.') !== 0));
 		});
 	});
 }

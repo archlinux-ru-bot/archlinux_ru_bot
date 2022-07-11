@@ -4,6 +4,7 @@ let {getName} = require('../../util');
 
 const VERIFY_COMMAND = 'LANG=C pacman -V | base32 | head -1';
 let ActiveCaptcha = [];
+let friendlyName = 'Арчекапча';
 let pluginUtils = {};
 
 async function delCurrentCaptcha(bot, currentCaptcha) {
@@ -33,6 +34,8 @@ async function delCurrentCaptcha(bot, currentCaptcha) {
 async function init(utils) {
 	pluginUtils = utils;
 }
+
+async function exitHandler() {}
 
 async function onNewMessage(bot, msg) {
 	let currentCaptcha = [];
@@ -169,6 +172,8 @@ async function onNewMessage(bot, msg) {
 }
 
 module.exports = {
+	friendlyName,
 	init,
+	exitHandler,
 	onNewMessage
 };

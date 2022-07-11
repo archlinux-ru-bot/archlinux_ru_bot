@@ -2,6 +2,7 @@ let Captcha = require('node-captcha-generator');
 let {getName} = require('../../util');
 
 let ActiveCaptcha = [];
+let friendlyName = 'Капча';
 let pluginUtils = {};
 
 async function delCurrentCaptcha(bot, currentCaptcha) {
@@ -43,6 +44,8 @@ function сaptchaToBase64(captchaObj) {
 async function init(utils) {
 	pluginUtils = utils;
 }
+
+async function exitHandler() {}
 
 async function onNewMessage(bot, msg) {
 	let currentCaptcha = [];
@@ -178,6 +181,8 @@ async function onNewMessage(bot, msg) {
 }
 
 module.exports = {
+	friendlyName,
 	init,
+	exitHandler,
 	onNewMessage
 };

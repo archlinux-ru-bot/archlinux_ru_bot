@@ -10,7 +10,7 @@ function getPluginFromRuntime(pluginName) {
 }
 
 function registerPluginInRuntime(pluginName) {
-	Plugins[pluginName] = require(`./plugin_binds/${pluginName}`);
+	Plugins[pluginName] = require(`./plugins/${pluginName}`);
 }
 
 function unregisterPluginInRuntime(pluginName) {

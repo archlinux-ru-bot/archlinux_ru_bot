@@ -1,6 +1,6 @@
-let models = require('../plugins/shizoid/models');
-let CommandParser = require('../plugins/shizoid/app/commandParser');
-let Message = require('../plugins/shizoid/app/message');
+let models = require('./models');
+let CommandParser = require('./app/commandParser');
+let Message = require('./app/message');
 
 let friendlyName = 'Шизик';
 let logger = {};
