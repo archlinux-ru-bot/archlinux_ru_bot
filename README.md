@@ -5,8 +5,8 @@
 ## Установка
 
 1. Склонировать репозиторий.
-2. `npm install`
-3. Скопировать **bot.env.example** в **bot.env**, **config.example.js** в **config.js** и прописать свои данные.
-4. Если нужен Docker, взять один из **docker-compose.example.*.yml** и скопировать в **docker-compose.yml**.
+2. Скопировать **bot.env.example** в **bot.env**, **config.example.js** в **config.js** и прописать свои данные.
+3. Взять один из **docker-compose.example.*.yml** и скопировать в **docker-compose.yml**.
+4. `docker-compose up -d --build`
 
 Добро пожаловать в мир арчебота!
