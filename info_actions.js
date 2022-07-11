@@ -7,13 +7,13 @@ let {isChatExists, getChat, addChat,
 
 let {listPluginsFromRuntime, getPluginFromRuntime} = require('./runtime_plugin_tools');
 
-const CURRENT_VERSION = 1608469360645;
+const CURRENT_VERSION = 1657544338387;
 
 const UPDATE_TEXT =
 `<b>Новое в этой версии:</b>
-* Используется кастомный поллинг, чтобы избегать зависаний
-* Исправлено определение стикеров суицида
-* Добавлен еще один стикер суицида`;
+* Бот переведен на локальный инстанс Bot API с вебхуами
+* Исправлены пара логических ошибок в создании/удалении ссылок на ники
+* Обновлены зависимости`;
 
 let UpdateNotificationLocks = {};
 
