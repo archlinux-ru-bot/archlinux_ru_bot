@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "description": "Captcha plugin with verify by a pacman command for archlinux_ru_bot",
   "main": "index.js",
-  "scripts": {},
   "author": "Ilya Fedin",
-  "license": "GPL-3.0-or-later",
-  "dependencies": {}
+  "license": "GPL-3.0-or-later"
 }

@@ -11,15 +11,16 @@
   "author": "Ilya Fedin",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "archcaptcha": "file:plugins/archcaptcha",
-    "axios": "^0.21.0",
-    "captcha": "file:plugins/captcha",
-    "knex": "^0.19.0",
-    "pg": "^6.4.2",
-    "shizoid-js": "file:plugins/shizoid",
-    "telegraf": "^3.38.0"
+    "axios": "^0.27.2",
+    "knex": "^2.1.0",
+    "pg": "^8.7.3",
+    "telegraf": "^4.8.5"
   },
   "devDependencies": {
-    "eslint": "^6.0.1"
-  }
+    "eslint": "^8.19.0"
+  },
+  "workspaces": [
+    "plugins/*"
+  ],
+  "packageManager": "yarn@3.2.1"
 }

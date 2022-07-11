@@ -3,7 +3,7 @@ ARG IMAGE=archlinux
 FROM $IMAGE AS telegram-bot-api
 
 RUN pacman -Syu --noconfirm && \
-	pacman -S --noconfirm base-devel cmake git gperf && \
+	pacman -S --noconfirm cmake make gcc gperf git && \
 	(yes | pacman -Scc)
 
 RUN mkdir /usr/src/telegram-bot-api && \
@@ -27,16 +27,15 @@ RUN pacman -Syu --noconfirm && \
 	pacman -S --noconfirm busybox lsb-release && \
 	(yes | pacman -Scc)
 
-RUN busybox --install -s
-RUN curl -sSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+RUN curl -sSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 RUN nvm install 12
-RUN nvm use 12
 
 COPY . /usr/src/app
-RUN cd /usr/src/app && nvm exec node npm install
+RUN cd /usr/src/app && npx yarn install
 
 COPY --from=telegram-bot-api /usr/bin/telegram-bot-api /usr/bin/telegram-bot-api
 COPY docker/files/svdir /var/service
 COPY docker/files/crontab /var/spool/cron/crontabs/root
 
-ENTRYPOINT ["/usr/bin/runsvdir", "-P", "/var/service"]
+RUN busybox --list | awk '/^runsv|^chpst$|^sv/' | xargs -I{} ln -sv /usr/bin/busybox /usr/local/bin/{}
+ENTRYPOINT ["/usr/local/bin/runsvdir", "-P", "/var/service"]

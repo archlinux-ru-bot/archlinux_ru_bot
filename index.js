@@ -1,4 +1,4 @@
-let Telegraf = require('telegraf');
+let {Telegraf} = require('telegraf');
 
 let {getArgs, getName, getMessageText} = require('./util');
 

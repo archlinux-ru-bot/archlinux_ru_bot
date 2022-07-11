@@ -5,7 +5,7 @@ services:
         build:
             context: .
             args:
-                IMAGE: mydatakeeper/archlinuxarm:armv7h
+                IMAGE: heywoodlh/archlinux
         env_file:
             - bot.env
         links:
